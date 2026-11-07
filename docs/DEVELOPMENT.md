@@ -88,6 +88,25 @@ Os testes de legibilidade calculam contraste a partir das cores computadas no DO
 
 O corretor é criado sob demanda. Quando uma instância falha ou excede o tempo de espera, os pedidos pendentes são rejeitados e a próxima tentativa pode criar outra instância. Mensagens antigas são descartadas por identidade da instância e geração da revisão; o conteúdo do editor não é substituído durante essa recuperação.
 
+## Correções em lote — versão 1.1.0
+
+Validação concluída em 7 de novembro de 2026, Windows, Node 24.19.0:
+
+| Verificação | Resultado |
+| --- | --- |
+| TypeScript e build de produção | Aprovados |
+| Vitest | 41 testes aprovados, incluindo 10 testes do núcleo de lote |
+| Playwright Chromium 158 | 32 testes aprovados |
+| Playwright Firefox 159 | 29 testes aprovados; 3 não aplicáveis |
+| Suíte de interface completa | 61 aprovados, 3 não aplicáveis, nenhuma falha; aproximadamente 1,3 min |
+| Recursos e caminhos do build | Aprovados |
+
+O núcleo verifica Unicode, offsets, cópias independentes dos planos, documento alterado, sobreposições, duplicados e proteção de números/URLs/códigos/unidades. Testes com o estado real do CodeMirror verificam uma transação isolada, desfazer/refazer do lote inteiro e mapeamento da seleção, sem substituir a digitação anterior no histórico.
+
+Os oito novos cenários de interface foram executados nos dois navegadores: nenhuma sugestão pré-selecionada; combinação explícita de ortografia e revisão; substituição de apenas uma ocorrência repetida; cancelamento e troca de escolhas; invalidação por edição, idioma ou ocorrência ignorada; rejeição de sobreposições; proteção técnica mesmo com o filtro desligado; prévia acessível em 320 px nos dois temas; e aplicação em inglês após recarregamento totalmente offline, preservando Unicode. Os três casos não aplicáveis continuam sendo as APIs de clipboard/IME específicas do Chromium já documentadas.
+
+A conferência visual incluiu prévias com três correções em desktop e 320 px. Em telas estreitas, os cartões selecionáveis preservam sua altura e a lista rola sem sobreposição; dentro da prévia, título e botões permanecem visíveis enquanto a lista de alterações rola. A navegação mantém o comportamento do diálogo nativo: o conteúdo da aplicação fica inerte, e o navegador pode permitir foco em seus próprios controles.
+
 ## Limites conhecidos
 
 - O Hunspell real roda via WebAssembly. Sugestões e cobertura dependem dos dados escolhidos e podem diferir de uma instalação específica do LibreOffice. O dicionário PT-BR distribuído identifica-se como VERO 3.2 (2013); não se presume atualização linguística até 2026. Consulte `DICTIONARIES.md`.

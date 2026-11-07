@@ -10,6 +10,16 @@ Uma correção é uma transação delimitada por offsets UTF-16 `from`/`to`. A o
 
 Menus e painel de revisão recebem ocorrências, não cópias editáveis do documento. As operações de copiar, colar e arquivos são disparadas por ações explícitas. O navegador continua responsável pelas permissões de área de transferência.
 
+## Correções em lote
+
+`src/review/BatchCorrections.ts` define os intervalos selecionados e o plano de aplicação. A seleção guarda o texto original e a substituição escolhida para cada ocorrência, sem selecionar a primeira sugestão automaticamente. O plano contém uma cópia do documento em memória; a aplicação é rejeitada se o documento mudou, se há sobreposições ou se um intervalo é inválido. O modo em lote protege spans técnicos reconhecíveis independentemente da preferência do filtro ortográfico.
+
+`useBatchCorrections` gerencia o modo, as escolhas e a prévia temporária. Alterações no texto, idioma ou contexto de verificação descartam as escolhas. Fechar a prévia preserva a seleção; aplicar ou sair do modo a limpa. Não existe persistência dessa fila nem envio de dados pela rede.
+
+A prévia apresenta contexto curto por ocorrência, com linha/coluna por grafemas e marcas explícitas para espaços, quebras de linha e remoções. O contexto é o do documento original ao redor de cada ocorrência; não é uma duplicação do documento completo nem uma simulação de todas as edições combinadas.
+
+`TextEditor.applyBatch` revalida o plano contra o estado atual e despacha um array de alterações em uma única transação. A anotação [`isolateHistory.of('full')`](https://codemirror.net/docs/ref/#commands.isolateHistory) separa o lote das edições anterior e seguinte no histórico. O CodeMirror mapeia a seleção pelos intervalos alterados; a transação não pede rolagem nem substitui todo o conteúdo do editor.
+
 ## Ortografia
 
 `src/spelling/` contém a tokenização, a carga dos dados locais e a integração do Hunspell C++ via `hunspell-wasm`. O módulo WebAssembly é distribuído junto da aplicação, sem download de CDN. O Web Worker executa o processamento mais custoso fora da interface. Resultados antigos são descartados por identificador de requisição; as sugestões são solicitadas sob demanda em vez de calcular alternativas para toda palavra desconhecida a cada tecla.

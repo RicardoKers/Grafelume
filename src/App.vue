@@ -23,6 +23,9 @@ import EditorToolbar from "./components/EditorToolbar.vue";
 import ReviewPanel from "./components/ReviewPanel.vue";
 import CorrectionMenu from "./components/CorrectionMenu.vue";
 import SettingsDialog from "./components/SettingsDialog.vue";
+import BatchPreviewDialog from "./components/BatchPreviewDialog.vue";
+import { useBatchCorrections } from "./composables/useBatchCorrections";
+import { isBatchProtected } from "./review/BatchCorrections";
 import {
   loadSettings,
   saveSettings,
@@ -51,6 +54,26 @@ const settingsOpen = ref(false),
 const active = ref<Issue>(),
   activeSuggestions = ref<string[]>([]),
   suggestionsLoading = ref(false);
+const {
+  mode: batchMode,
+  edits: batchEdits,
+  plan: batchPlan,
+  select: selectBatch,
+  preview: previewBatch,
+  apply: applyBatch,
+  clear: clearBatch,
+  remove: removeBatch,
+  invalidate: invalidateBatch,
+  closePreview: closeBatchPreview,
+  toggle: toggleBatch,
+} = useBatchCorrections(text, () => settings.language, {
+  apply: (plan) => editor.value?.applyBatch(plan) ?? false,
+  notify,
+  focusEditor: () => editor.value?.focus(),
+});
+const batchBlocked = computed(
+  () => !!active.value && isBatchProtected(text.value, active.value),
+);
 const menu = ref<{
   x: number;
   y: number;
@@ -119,6 +142,20 @@ watch(text, () => {
   active.value = undefined;
   suggestionVersion++;
 });
+watch(
+  [
+    () => settings.spelling,
+    () => settings.review,
+    () => settings.ignoreTechnical,
+    personal,
+    ignored,
+  ],
+  () =>
+    invalidateBatch(
+      "As opções da revisão mudaram. Selecione novamente as correções para o lote.",
+    ),
+  { deep: true },
+);
 watch(state, () => {
   if (state.value === "ready") void refreshOffline();
 });
@@ -264,6 +301,9 @@ function removeWord(word: string) {
   else notify("Não foi possível salvar o dicionário pessoal.");
 }
 function ignore(issue: Issue) {
+  invalidateBatch(
+    "A revisão mudou. Selecione novamente as correções para o lote.",
+  );
   if (issue.category === "spelling")
     ignored.value = [...ignored.value, issue.text];
   else ignoreReview(issue);
@@ -280,6 +320,18 @@ function apply(
   editor.value?.replace(issue.from, issue.to, replacement);
   menu.value = undefined;
   active.value = undefined;
+}
+function queueCorrection(issue: Issue, replacement: string) {
+  const current = issues.value.find((item) => item.id === issue.id);
+  const available =
+    issue.category === "spelling" && active.value?.id === issue.id
+      ? activeSuggestions.value
+      : issue.suggestions;
+  if (!current || !available.includes(replacement)) {
+    notify("Esta sugestão mudou. Selecione a ocorrência novamente.");
+    return;
+  }
+  selectBatch(current, replacement);
 }
 async function selectIssue(issue: Issue) {
   const version = ++suggestionVersion;
@@ -325,8 +377,7 @@ async function openContext(data: {
   if (current.loading) {
     try {
       const items = await suggestions(target.text);
-      if (version === menuVersion && menu.value)
-        menu.value.suggestions = items;
+      if (version === menuVersion && menu.value) menu.value.suggestions = items;
     } catch (e) {
       if (version === menuVersion && menu.value) notify((e as Error).message);
     } finally {
@@ -450,11 +501,19 @@ const example =
             :loading="suggestionsLoading"
             :empty="!text"
             :checking="state === 'loading' && !!text"
+            :batch-mode="batchMode"
+            :batch-edits="batchEdits"
+            :batch-blocked="batchBlocked"
             @select="selectIssue"
             @replace="apply"
             @ignore="ignore"
             @add="addWord"
             @close="settings.showReview = false"
+            @toggle-batch="toggleBatch"
+            @queue="queueCorrection"
+            @preview="previewBatch"
+            @clear-batch="clearBatch"
+            @remove-batch="removeBatch"
           />
         </div>
         <StatusBar
@@ -511,6 +570,12 @@ const example =
       @close="settingsOpen = false"
       @add="addWord"
       @remove="removeWord"
+    />
+    <BatchPreviewDialog
+      v-if="batchPlan"
+      :plan="batchPlan"
+      @close="closeBatchPreview"
+      @apply="applyBatch"
     />
     <CorrectionMenu
       v-if="menu"

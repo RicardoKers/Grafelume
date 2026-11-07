@@ -10,6 +10,8 @@ O localStorage guarda apenas preferências de aparência/comportamento e palavra
 
 O Cache Storage guarda arquivos estáticos da aplicação e dicionários baixados. Nenhum documento digitado é colocado nesse cache. Não há armazenamento de texto em IndexedDB ou em nuvem.
 
+A seleção de correções em lote e a cópia usada para conferir a prévia ficam apenas na memória da página. Não são incluídas nas preferências, no dicionário pessoal ou no cache offline. Fechar a página descarta esses dados.
+
 Para remover dados locais, use as ferramentas de dados do site no navegador. Isso também pode remover dicionários e a instalação offline. Remover uma palavra nas configurações a retira do dicionário pessoal daquele idioma.
 
 ## Rede e área de transferência

@@ -37,6 +37,15 @@ O build está em **`dist/`**. Para verificar instalação e modo offline, utiliz
 - Copie, importe ou exporte TXT em UTF-8. Alterações e correções individuais podem ser desfeitas pelo histórico do editor.
 - Ajuste tema, fonte, tamanho, largura, espaçamento e preferências nas configurações.
 
+### Correções em lote com prévia
+
+1. No painel de revisão, ative **Correções em lote**.
+2. Abra cada ocorrência e escolha a sugestão que deseja incluir. Nenhuma opção é selecionada automaticamente, e o texto continua intacto.
+3. Clique em **Ver prévia** para conferir os trechos Antes/Depois, com contexto e localização. Espaços e quebras de linha aparecem marcados nos destaques.
+4. Use **Aplicar N correções** para confirmar. **Desfazer** ou Ctrl+Z reverte o lote inteiro; **Refazer** reaplica a operação.
+
+Você pode trocar uma sugestão, desmarcá-la, limpar a seleção ou voltar da prévia sem aplicar nada. Se o texto, o idioma ou as opções de verificação mudarem, as escolhas são descartadas para não usar trechos antigos. Correções sobrepostas não podem entrar no mesmo lote. Números, URLs, códigos, identificadores e unidades técnicas reconhecíveis permanecem protegidos nesse modo, mesmo com o filtro técnico desligado; podem ser editados individualmente.
+
 Somente as preferências e o dicionário pessoal são persistidos. **O texto em edição não é salvo automaticamente.** Copie ou exporte antes de fechar ou atualizar a aplicação. As permissões de área de transferência dependem do navegador; quando uma operação é bloqueada, os atalhos nativos continuam disponíveis.
 
 ## Instalação e funcionamento offline
@@ -74,8 +83,8 @@ Vue 3 organiza a interface. CodeMirror 6 fornece edição, seleção, composiç�
 
 ## Limitações e evolução
 
-A primeira versão corrige ocorrências individualmente. Correção em lote, DOCX/PDF, tradução, colaboração e análise gramatical completa ficam fora do escopo. Nomes próprios, termos recentes e combinações linguísticas não cobertas pelos dicionários podem precisar do dicionário pessoal. O motor utiliza o Hunspell real, mas a cobertura lexical depende das versões dos dicionários incluídos; não se promete equivalência com a configuração de uma instalação específica do LibreOffice.
+A aplicação oferece correções individuais e lotes com seleção explícita e prévia. DOCX/PDF, tradução, colaboração e análise gramatical completa ficam fora do escopo. Nomes próprios, termos recentes e combinações linguísticas não cobertas pelos dicionários podem precisar do dicionário pessoal. O motor utiliza o Hunspell real, mas a cobertura lexical depende das versões dos dicionários incluídos; não se promete equivalência com a configuração de uma instalação específica do LibreOffice.
 
 Os resultados efetivamente medidos e os navegadores verificados devem ser consultados em [DEVELOPMENT.md](docs/DEVELOPMENT.md). O conjunto de testes disponível não equivale a certificação de todos os navegadores, teclados e métodos de composição.
 
-Evoluções possíveis: novos idiomas, revisão conservadora com mais casos reais, correções em lote com prévia e testes adicionais de acessibilidade e IME. A arquitetura permite essas extensões sem transmitir textos.
+Evoluções possíveis: novos idiomas, revisão conservadora com mais casos reais e testes adicionais de acessibilidade e IME. A arquitetura permite essas extensões sem transmitir textos.

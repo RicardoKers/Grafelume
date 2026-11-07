@@ -1,5 +1,15 @@
 # Histórico de versões
 
+## 1.1.0 — 7 de novembro de 2026
+
+- Correções em lote no painel de revisão, com escolha explícita de uma sugestão por ocorrência.
+- Prévia Antes/Depois com contexto, linha/coluna e indicação de espaços, quebras de linha e remoções.
+- Aplicação em uma única transação, permitindo desfazer ou refazer o lote inteiro sem misturá-lo à digitação.
+- Seleções podem ser trocadas, removidas ou descartadas; fechar a prévia conserva as escolhas.
+- Validação contra documento alterado, intervalos inválidos e correções sobrepostas; proteção de termos técnicos no modo em lote.
+- Escolhas e prévia permanecem apenas na memória, com suporte offline nos dois idiomas.
+- Painel sem cartões sobrepostos no celular e prévia longa com título e botões sempre visíveis.
+
 ## 1.0.1 — 7 de novembro de 2026
 
 - Melhor contraste e tamanho de texto nas ações de revisão, nas informações do documento e no rodapé, nos temas claro e escuro.

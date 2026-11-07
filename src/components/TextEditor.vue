@@ -23,6 +23,7 @@ import {
 } from "@codemirror/commands";
 import type { Issue } from "../types";
 import type { Settings } from "../services/SettingsService";
+import { batchTransaction, type BatchPlan } from "../review/BatchCorrections";
 
 const props = defineProps<{ issues: Issue[]; settings: Settings }>();
 const emit = defineEmits<{
@@ -176,6 +177,10 @@ function replace(from: number, to: number, insert: string) {
 }
 defineExpose({
   replace,
+  applyBatch: (plan: BatchPlan) => {
+    view.dispatch(batchTransaction(view.state, plan));
+    return true;
+  },
   setText: (text: string) => replace(0, view.state.doc.length, text),
   selectAll: () => {
     view.dispatch({ selection: { anchor: 0, head: view.state.doc.length } });
