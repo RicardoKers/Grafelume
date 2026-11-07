@@ -24,6 +24,7 @@ import {
 import type { Issue } from "../types";
 import type { Settings } from "../services/SettingsService";
 import { batchTransaction, type BatchPlan } from "../review/BatchCorrections";
+import { translationTransaction, type TranslationSelection } from '../translation/replacement';
 
 const props = defineProps<{ issues: Issue[]; settings: Settings }>();
 const emit = defineEmits<{
@@ -177,6 +178,12 @@ function replace(from: number, to: number, insert: string) {
 }
 defineExpose({
   replace,
+  applyTranslation: (source: TranslationSelection, insert: string) => {
+    const transaction = translationTransaction(view.state, source, insert);
+    if (!transaction) return false;
+    view.dispatch(transaction);
+    return true;
+  },
   applyBatch: (plan: BatchPlan) => {
     view.dispatch(batchTransaction(view.state, plan));
     return true;

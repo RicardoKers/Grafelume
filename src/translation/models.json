@@ -1,0 +1,202 @@
+[
+  {
+    "direction": "en-pt",
+    "id": "en-pt",
+    "source": "en-US",
+    "target": "pt-BR",
+    "name": "Xenova/opus-mt-en-ROMANCE",
+    "upstream": "Xenova/opus-mt-en-ROMANCE",
+    "revision": "9d2ba69ac80c8e8453c3d9a1e2323a0e7b8ca3cd",
+    "prefix": ">>pt_br<< ",
+    "baseModel": "Helsinki-NLP/opus-mt-en-ROMANCE",
+    "baseRevision": "f8f3a28e8b6272d0ccc0290b832f699e154ae431",
+    "licenses": [
+      "Apache-2.0",
+      "CC-BY-4.0"
+    ],
+    "licenseNote": "Original Hugging Face cards declare Apache-2.0; OPUS-MT project declares CC-BY-4.0 for pretrained models. Both notices are preserved.",
+    "files": [
+      {
+        "path": "config.json",
+        "bytes": 1508,
+        "sha256": "dc4f6f9ffbbf1196ff9e8329e5666fe190aef1b1c6806649d86b962b9bde292c"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 293,
+        "sha256": "b743baabb7da4c1a2f19fe558bd6b4c0c7c3b0762fcb5ca7a48fe5a2c2219803"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 6117691,
+        "sha256": "31cabbd7e3857f21bcde266b0e84585ef3282133acce42d3765e8f31cb5f4040"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 503,
+        "sha256": "666d091bdf094d476aac60b645efd7d18cac468510f5c71b327b7ae937126e05"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 74,
+        "sha256": "5e4d1f5e759d74cb1c2fe1d165cfc62b5237aa904de759380cd6f43042eec723"
+      },
+      {
+        "path": "onnx/encoder_model_quantized.onnx",
+        "bytes": 52899742,
+        "sha256": "b4ddfd9338ba3d7c6b9c2d1410ed94fb7e06741226918cef6148031101bbd019"
+      },
+      {
+        "path": "onnx/decoder_model_merged_quantized.onnx",
+        "bytes": 60212804,
+        "sha256": "b5f6d442da7fa69f9d500df90373d2fdca4f799c43696b41888353b5c3c8eb13"
+      }
+    ],
+    "totalBytes": 119232615,
+    "notices": [
+      {
+        "path": "MODEL_CARD.md",
+        "bytes": 581,
+        "sha256": "69af88f5336ce7e2a3c3b1cc0440f67ee8bdf4c15af351973d1b6b007578bdcc",
+        "sourceUrl": "https://huggingface.co/Xenova/opus-mt-en-ROMANCE/resolve/9d2ba69ac80c8e8453c3d9a1e2323a0e7b8ca3cd/README.md"
+      },
+      {
+        "path": "UPSTREAM_MODEL_CARD.md",
+        "bytes": 2259,
+        "sha256": "329ee7a6989c814c82c82c0b4901a247f452674eb31ded4a4f2297b2e321f64a",
+        "sourceUrl": "https://huggingface.co/Helsinki-NLP/opus-mt-en-ROMANCE/resolve/f8f3a28e8b6272d0ccc0290b832f699e154ae431/README.md"
+      },
+      {
+        "path": "OPUS-MT_MODEL_README.md",
+        "bytes": 2762,
+        "sha256": "a62df1bff9b11a67053b497031dcab52933319ada4d7ffad0155e1e333221290",
+        "sourceUrl": "https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/models/en-fr+fr_BE+fr_CA+fr_FR+wa+frp+oc+ca+rm+lld+fur+lij+lmo+es+es_AR+es_CL+es_CO+es_CR+es_DO+es_EC+es_ES+es_GT+es_HN+es_MX+es_NI+es_PA+es_PE+es_PR+es_SV+es_UY+es_VE+pt+pt_br+pt_BR+pt_PT+gl+lad+an+mwl+it+it_IT+co+nap+scn+vec+sc+ro+la/README.md"
+      },
+      {
+        "path": "OPUS-MT_PROJECT_README.md",
+        "bytes": 4525,
+        "sha256": "a2ce550ae68334d3ed9b7f74c7bdacfa9aedbc9b6678ad695193b26769ceea1e",
+        "sourceUrl": "https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/README.md"
+      },
+      {
+        "path": "LICENSE-APACHE-2.0.txt",
+        "bytes": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "sourceUrl": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      },
+      {
+        "path": "LICENSE-CC-BY-4.0.txt",
+        "bytes": 18657,
+        "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+        "sourceUrl": "https://creativecommons.org/licenses/by/4.0/legalcode.txt"
+      },
+      {
+        "path": "NOTICE.md",
+        "bytes": 2330,
+        "sha256": "67ba6f487edcb409dd619bb5ecafb64c6a5c124eec20ced15899c45c769491e6",
+        "content": "# OPUS-MT — atribuição e procedência\n\nModelo original: Helsinki-NLP/opus-mt-en-ROMANCE, desenvolvido pelo grupo Helsinki-NLP / Universidade de Helsinki, projeto OPUS-MT.\nConversão de pesos para ONNX/Transformers.js: Xenova (Joshua Lochner), Xenova/opus-mt-en-ROMANCE.\nO Grafelume redistribui os arquivos quantizados q8 sem alterar os pesos. O alias local en-pt não identifica um modelo novo.\n\nO card original fixado declara Apache-2.0; o README do projeto OPUS-MT fixado declara CC-BY-4.0 para os modelos pré-treinados. As duas declarações são preservadas junto com os textos completos das licenças; o card de conversão ONNX não declara outra licença própria. A licença MIT do aplicativo não relicencia esses arquivos.\n\nDados de treinamento: coleção OPUS, conforme os cards. Eles não enumeram uma versão única nem todas as licenças dos corpora; não se atribui uma licença única à coleção OPUS. Os dados de treinamento não são redistribuídos pelo Grafelume. A documentação original fixada em OPUS-MT_MODEL_README.md e OPUS-MT_PROJECT_README.md preserva as fontes, agradecimentos e referências.\n\nReferências solicitadas pelo projeto:\n- Jörg Tiedemann et al. (2023), Democratizing neural machine translation with OPUS-MT, Language Resources and Evaluation. https://doi.org/10.1007/s10579-023-09704-w\n- Jörg Tiedemann e Santhosh Thottingal (2020), OPUS-MT — Building open translation services for the World, EAMT. https://aclanthology.org/2020.eamt-1.61/\n\nFontes fixadas:\n- https://huggingface.co/Xenova/opus-mt-en-ROMANCE/resolve/9d2ba69ac80c8e8453c3d9a1e2323a0e7b8ca3cd/README.md\n- https://huggingface.co/Helsinki-NLP/opus-mt-en-ROMANCE/resolve/f8f3a28e8b6272d0ccc0290b832f699e154ae431/README.md\n- https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/models/en-fr+fr_BE+fr_CA+fr_FR+wa+frp+oc+ca+rm+lld+fur+lij+lmo+es+es_AR+es_CL+es_CO+es_CR+es_DO+es_EC+es_ES+es_GT+es_HN+es_MX+es_NI+es_PA+es_PE+es_PR+es_SV+es_UY+es_VE+pt+pt_br+pt_BR+pt_PT+gl+lad+an+mwl+it+it_IT+co+nap+scn+vec+sc+ro+la/README.md\n- https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/README.md\n\nOs hashes SHA-256 e tamanhos de todos os arquivos distribuídos constam em src/translation/models.json no repositório Grafelume.\n"
+      }
+    ],
+    "totalNoticeBytes": 42472
+  },
+  {
+    "direction": "pt-en",
+    "id": "pt-en",
+    "source": "pt-BR",
+    "target": "en-US",
+    "name": "Xenova/opus-mt-ROMANCE-en",
+    "upstream": "Xenova/opus-mt-ROMANCE-en",
+    "revision": "f60feaabe8bb435a5871e7702b25f53a01e770f8",
+    "prefix": "",
+    "baseModel": "Helsinki-NLP/opus-mt-ROMANCE-en",
+    "baseRevision": "e9ca9975e3972afd80732f08ce01d3a1339f47f8",
+    "licenses": [
+      "Apache-2.0",
+      "CC-BY-4.0"
+    ],
+    "licenseNote": "Original Hugging Face cards declare Apache-2.0; OPUS-MT project declares CC-BY-4.0 for pretrained models. Both notices are preserved.",
+    "files": [
+      {
+        "path": "config.json",
+        "bytes": 1361,
+        "sha256": "df1876a346b1852ef4590bc74c6e180eb2ba10193cf2bded24c31876f357d83c"
+      },
+      {
+        "path": "generation_config.json",
+        "bytes": 293,
+        "sha256": "b743baabb7da4c1a2f19fe558bd6b4c0c7c3b0762fcb5ca7a48fe5a2c2219803"
+      },
+      {
+        "path": "tokenizer.json",
+        "bytes": 6120151,
+        "sha256": "34979cc78f4dfa92f7b39ad8f0d4068dc7d1be61940f09db5ac77818e013bd99"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "bytes": 503,
+        "sha256": "3e2f209841b92e5ed7cbb188e5bb2c2bcbb05afaef4777e3d03b4c4cc25da334"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "bytes": 74,
+        "sha256": "5e4d1f5e759d74cb1c2fe1d165cfc62b5237aa904de759380cd6f43042eec723"
+      },
+      {
+        "path": "onnx/encoder_model_quantized.onnx",
+        "bytes": 52899741,
+        "sha256": "13750ba31ee80c88f6bbb28aa03320674c50394efb95f791d5c4f5c8894232bf"
+      },
+      {
+        "path": "onnx/decoder_model_merged_quantized.onnx",
+        "bytes": 60212803,
+        "sha256": "5c0d95a8072a463c747343cf25ac9b4a17e9a90e08131e7efab12691ca13c979"
+      }
+    ],
+    "totalBytes": 119234926,
+    "notices": [
+      {
+        "path": "MODEL_CARD.md",
+        "bytes": 581,
+        "sha256": "478e9473f8660e52812d873fb5cffd45f41f6f23df7b593f36f81393290a6d49",
+        "sourceUrl": "https://huggingface.co/Xenova/opus-mt-ROMANCE-en/resolve/f60feaabe8bb435a5871e7702b25f53a01e770f8/README.md"
+      },
+      {
+        "path": "UPSTREAM_MODEL_CARD.md",
+        "bytes": 2155,
+        "sha256": "9150c322db005f83bbb3c6794754b3896d94e88f2a938d8298f030ad07eef02b",
+        "sourceUrl": "https://huggingface.co/Helsinki-NLP/opus-mt-ROMANCE-en/resolve/e9ca9975e3972afd80732f08ce01d3a1339f47f8/README.md"
+      },
+      {
+        "path": "OPUS-MT_MODEL_README.md",
+        "bytes": 2530,
+        "sha256": "3c95f2b530982e326f844a7ecf7ca98f654ca93132b1874ddbc8e5d8c544dbb4",
+        "sourceUrl": "https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/models/fr+fr_BE+fr_CA+fr_FR+wa+frp+oc+ca+rm+lld+fur+lij+lmo+es+es_AR+es_CL+es_CO+es_CR+es_DO+es_EC+es_ES+es_GT+es_HN+es_MX+es_NI+es_PA+es_PE+es_PR+es_SV+es_UY+es_VE+pt+pt_br+pt_BR+pt_PT+gl+lad+an+mwl+it+it_IT+co+nap+scn+vec+sc+ro+la-en/README.md"
+      },
+      {
+        "path": "OPUS-MT_PROJECT_README.md",
+        "bytes": 4525,
+        "sha256": "a2ce550ae68334d3ed9b7f74c7bdacfa9aedbc9b6678ad695193b26769ceea1e",
+        "sourceUrl": "https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/README.md"
+      },
+      {
+        "path": "LICENSE-APACHE-2.0.txt",
+        "bytes": 11358,
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "sourceUrl": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      },
+      {
+        "path": "LICENSE-CC-BY-4.0.txt",
+        "bytes": 18657,
+        "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+        "sourceUrl": "https://creativecommons.org/licenses/by/4.0/legalcode.txt"
+      },
+      {
+        "path": "NOTICE.md",
+        "bytes": 2330,
+        "sha256": "963147a6eae030e1d3e079004b18cea758f2a4fd6ddd47af7095030b5c5e0654",
+        "content": "# OPUS-MT — atribuição e procedência\n\nModelo original: Helsinki-NLP/opus-mt-ROMANCE-en, desenvolvido pelo grupo Helsinki-NLP / Universidade de Helsinki, projeto OPUS-MT.\nConversão de pesos para ONNX/Transformers.js: Xenova (Joshua Lochner), Xenova/opus-mt-ROMANCE-en.\nO Grafelume redistribui os arquivos quantizados q8 sem alterar os pesos. O alias local pt-en não identifica um modelo novo.\n\nO card original fixado declara Apache-2.0; o README do projeto OPUS-MT fixado declara CC-BY-4.0 para os modelos pré-treinados. As duas declarações são preservadas junto com os textos completos das licenças; o card de conversão ONNX não declara outra licença própria. A licença MIT do aplicativo não relicencia esses arquivos.\n\nDados de treinamento: coleção OPUS, conforme os cards. Eles não enumeram uma versão única nem todas as licenças dos corpora; não se atribui uma licença única à coleção OPUS. Os dados de treinamento não são redistribuídos pelo Grafelume. A documentação original fixada em OPUS-MT_MODEL_README.md e OPUS-MT_PROJECT_README.md preserva as fontes, agradecimentos e referências.\n\nReferências solicitadas pelo projeto:\n- Jörg Tiedemann et al. (2023), Democratizing neural machine translation with OPUS-MT, Language Resources and Evaluation. https://doi.org/10.1007/s10579-023-09704-w\n- Jörg Tiedemann e Santhosh Thottingal (2020), OPUS-MT — Building open translation services for the World, EAMT. https://aclanthology.org/2020.eamt-1.61/\n\nFontes fixadas:\n- https://huggingface.co/Xenova/opus-mt-ROMANCE-en/resolve/f60feaabe8bb435a5871e7702b25f53a01e770f8/README.md\n- https://huggingface.co/Helsinki-NLP/opus-mt-ROMANCE-en/resolve/e9ca9975e3972afd80732f08ce01d3a1339f47f8/README.md\n- https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/models/fr+fr_BE+fr_CA+fr_FR+wa+frp+oc+ca+rm+lld+fur+lij+lmo+es+es_AR+es_CL+es_CO+es_CR+es_DO+es_EC+es_ES+es_GT+es_HN+es_MX+es_NI+es_PA+es_PE+es_PR+es_SV+es_UY+es_VE+pt+pt_br+pt_BR+pt_PT+gl+lad+an+mwl+it+it_IT+co+nap+scn+vec+sc+ro+la-en/README.md\n- https://raw.githubusercontent.com/Helsinki-NLP/OPUS-MT-train/d5e932c96d77596378010aa7e7f1caeb8ccaa9f8/README.md\n\nOs hashes SHA-256 e tamanhos de todos os arquivos distribuídos constam em src/translation/models.json no repositório Grafelume.\n"
+      }
+    ],
+    "totalNoticeBytes": 42136
+  }
+]

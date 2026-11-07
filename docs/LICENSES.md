@@ -17,6 +17,12 @@ O código original do Grafelume é distribuído sob MIT, conforme `LICENSE`. Iss
 | Vitest              | Testes unitários                                    | MIT                                           | [vitest-dev/vitest](https://github.com/vitest-dev/vitest)                           |
 | Playwright          | Testes reais em navegador                           | Apache-2.0                                    | [microsoft/playwright](https://github.com/microsoft/playwright)                     |
 
+## Tradução
+
+Transformers.js 4.3.2 usa Apache-2.0 e o ONNX Runtime usa MIT, com seus avisos de terceiros preservados em `public/translation/engine/notices/`. Os pacotes ONNX e guid-typescript omitem o arquivo de licença na distribuição npm; o gerador de avisos usa cópias locais das fontes oficiais fixadas. `SOURCES.txt` registra essas fontes e a origem do texto ISC padronizado para guid-typescript, cujo pacote declara ISC e autoria `nicolas`.
+
+Os pesos Marian/OPUS-MT são redistribuídos com os cartões originais, atribuição, revisões fixadas e declarações Apache-2.0/CC-BY-4.0 preservadas. Veja [TRANSLATION-MODELS.md](TRANSLATION-MODELS.md). Esses termos são próprios dos modelos e não são substituídos pela licença MIT da aplicação.
+
 ## Dicionários
 
 Os pacotes `dictionary-pt` e `dictionary-en` normalizam e redistribuem dados de projetos anteriores. A licença MIT do agregador **não** relicencia os arquivos `.aff` e `.dic`: cada conjunto conserva sua licença original. Os avisos copiados ficam em `public/dictionaries/`, junto dos arquivos publicados. Consulte também [DICTIONARIES.md](DICTIONARIES.md) para atribuição, versões e suporte do motor.

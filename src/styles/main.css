@@ -1,5 +1,9 @@
 @import url("./tokens.css");
 @import url("./batch.css");
+@import url("./translation.css");
+
+.translation-open { display: inline-flex; align-items: center; gap: 5px; color: var(--blue); padding: 4px 6px; border-radius: 5px; font-size: 12px; }
+.translation-open:hover:enabled { background: var(--blue-soft); }
 
 * {
   box-sizing: border-box;

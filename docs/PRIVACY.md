@@ -2,13 +2,13 @@
 
 O conteúdo do editor é processado no navegador. A ortografia é executada pelo Hunspell compilado para WebAssembly em um Web Worker local, usando os arquivos Hunspell distribuídos com a aplicação. A revisão básica usa regras determinísticas locais.
 
-Não há APIs de correção, IA, analytics, rastreadores, contas ou endpoints para receber documentos. As dependências JavaScript e CSS são empacotadas; não são carregadas de CDNs. Fontes são locais ao sistema, sem requisições a provedores de fontes.
+Não há APIs de correção ou tradução remota, analytics, rastreadores, contas ou endpoints para receber documentos. A tradução opcional usa IA local em um Worker: o modelo neural, o runtime WASM e os arquivos de configuração são distribuídos pela mesma hospedagem da aplicação. As dependências JavaScript e CSS não são carregadas de CDNs. Fontes são locais ao sistema, sem requisições a provedores de fontes.
 
 ## Dados persistidos
 
 O localStorage guarda apenas preferências de aparência/comportamento e palavras adicionadas ao dicionário pessoal, com separação de idioma. O texto em edição e as palavras ignoradas não são salvos permanentemente. Se o armazenamento local for bloqueado, a aplicação pode continuar a funcionar durante a sessão, mas as preferências não serão restauradas.
 
-O Cache Storage guarda arquivos estáticos da aplicação e dicionários baixados. Nenhum documento digitado é colocado nesse cache. Não há armazenamento de texto em IndexedDB ou em nuvem.
+O Cache Storage guarda arquivos estáticos da aplicação, dicionários e modelos de tradução baixados explicitamente. Nenhum documento digitado, trecho selecionado ou tradução é colocado nesse cache. Não há armazenamento de texto em IndexedDB ou em nuvem. Os tensores de tradução ficam apenas na memória do Worker; fechar ou cancelar encerra esse Worker. A prévia e o resultado ficam apenas na memória da página até fechar o diálogo.
 
 A seleção de correções em lote e a cópia usada para conferir a prévia ficam apenas na memória da página. Não são incluídas nas preferências, no dicionário pessoal ou no cache offline. Fechar a página descarta esses dados.
 

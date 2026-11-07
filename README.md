@@ -4,7 +4,7 @@
 
 [Abrir o Grafelume](https://ricardokers.github.io/Grafelume/) · [Histórico de versões](CHANGELOG.md)
 
-O Grafelume funciona inteiramente no navegador: sem contas, backend, inteligência artificial, rastreadores ou envio dos textos para servidores. O código da aplicação usa licença MIT; os dicionários e as dependências preservam suas próprias licenças.
+O Grafelume funciona inteiramente no navegador: sem contas, backend, rastreadores ou envio dos textos para servidores. A ortografia usa Hunspell; a tradução opcional usa um modelo neural executado no dispositivo. O código da aplicação usa licença MIT; os dicionários, modelos e dependências preservam suas próprias licenças.
 
 ## Executar localmente
 
@@ -50,6 +50,14 @@ Somente as preferências e o dicionário pessoal são persistidos. **O texto em 
 
 ## Instalação e funcionamento offline
 
+### Tradução local PT ↔ EN
+
+Clique em **Traduzir**, acima do texto. Uma seleção traduz somente aquele trecho; sem seleção, a prévia usa o documento inteiro. Confira o idioma original e escolha **Baixar modelo e traduzir**. A primeira direção exige cerca de **135 MB**; a outra, cerca de **120 MB** adicionais. O download é explícito e pode ser cancelado. Os modelos ficam no navegador para uso offline e podem ser removidos no próprio diálogo.
+
+A tradução aparece separada do original. Você pode copiar, exportar TXT ou escolher **Usar tradução no editor**; Desfazer restaura o original em um passo. Aplicar ao documento inteiro muda o idioma da revisão para o destino; aplicar a uma seleção mantém o idioma do documento. Nenhum texto é enviado durante a tradução. A tradução automática pode conter erros, omissões e escolhas inadequadas: revise antes de usar. O processamento depende da memória e da velocidade do dispositivo.
+
+Os modelos não são baixados ao abrir a página nem pela ação **Preparar offline**, que prepara os dicionários ortográficos. Após baixar um modelo, ele pode traduzir mesmo depois de reabrir o aplicativo sem conexão. Veja [modelos, versões e atribuições](docs/TRANSLATION-MODELS.md).
+
 O primeiro acesso precisa de conexão para baixar a aplicação. O idioma selecionado carrega seu dicionário sob demanda. A ação **Preparar offline** baixa e armazena os dois dicionários; aguarde a confirmação de conclusão. O indicador de disponibilidade distingue um dicionário ainda não armazenado de um disponível offline.
 
 Depois do download, o Service Worker atende os recursos locais do cache. A instalação como aplicação está disponível quando o navegador oferece essa opção. O armazenamento pode ser removido pelo usuário, pelo modo privado ou pelas políticas de espaço do navegador. Não é possível garantir disponibilidade offline depois dessa remoção.
@@ -83,7 +91,7 @@ Vue 3 organiza a interface. CodeMirror 6 fornece edição, seleção, composiç�
 
 ## Limitações e evolução
 
-A aplicação oferece correções individuais e lotes com seleção explícita e prévia. DOCX/PDF, tradução, colaboração e análise gramatical completa ficam fora do escopo. Nomes próprios, termos recentes e combinações linguísticas não cobertas pelos dicionários podem precisar do dicionário pessoal. O motor utiliza o Hunspell real, mas a cobertura lexical depende das versões dos dicionários incluídos; não se promete equivalência com a configuração de uma instalação específica do LibreOffice.
+A aplicação oferece correções individuais, lotes com seleção explícita e prévia e tradução local PT ↔ EN. DOCX/PDF, colaboração e análise gramatical completa ficam fora do escopo. Nomes próprios, termos recentes e combinações linguísticas não cobertas pelos dicionários podem precisar do dicionário pessoal. O motor utiliza o Hunspell real, mas a cobertura lexical depende das versões dos dicionários incluídos; não se promete equivalência com a configuração de uma instalação específica do LibreOffice.
 
 Os resultados efetivamente medidos e os navegadores verificados devem ser consultados em [DEVELOPMENT.md](docs/DEVELOPMENT.md). O conjunto de testes disponível não equivale a certificação de todos os navegadores, teclados e métodos de composição.
 

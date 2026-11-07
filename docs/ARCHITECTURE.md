@@ -44,6 +44,16 @@ O vite-plugin-pwa gera um Service Worker com Workbox. A interface, os módulos c
 
 A atualização do Service Worker é oferecida ao usuário em vez de recarregar silenciosamente o editor. A aplicação precisa alertar que o documento em memória será perdido ao aceitar. O cache do navegador é conveniência local, não armazenamento durável garantido.
 
+## Tradução opcional
+
+`src/translation/` contém manifestos fixados com SHA-256, download explícito, segmentação por sentença, protocolo do Worker e transação de substituição. O Store baixa somente recursos estáticos da mesma origem, verifica tamanho/hash antes de armazenar e retém arquivos completos para retomar tentativas. Modelos/runtime não entram no precache do shell. O cache `grafelume-translation-v1` deve mudar quando os bytes dos modelos ou runtime mudarem; o mesmo nome é usado no Store e na rota CacheOnly do SW. Downloads explícitos com `cache: no-store` passam pela rede; imports posteriores são atendidos pelo cache já verificado.
+
+O Worker importa o bundle standalone local do Transformers.js 4.3.2 e usa ONNX Runtime WASM em uma thread, sem exigir COOP/COEP. Desabilita modelos remotos e substitui fetch por leitura de uma lista de arquivos preparada no Cache Storage; configurações opcionais ausentes recebem 404 local. Cada sentença é traduzida separadamente, com divisão adicional por contagem real de tokens. EN→PT-BR recebe o token de destino 51 diretamente nos tensores, pois essa versão do tokenizer divide incorretamente sua representação textual. Limites de saída geram erro, sem aplicar resultado parcial.
+
+`useTranslation` invalida respostas antigas, aborta downloads e termina o Worker ao cancelar, fechar ou mudar o idioma. O resultado só é aplicado por ação explícita, após validar o snapshot integral do documento, em uma transação com histórico isolado. Modelos e licenças estão descritos em [TRANSLATION-MODELS.md](TRANSLATION-MODELS.md).
+
+O script de cópia aplica um alias consistente a uma classe de arquitetura não usada pela tradução, cujo identificador público de 32 caracteres é confundido com uma credencial pela proteção do GitHub. A alteração não introduz chaves nem modifica as classes Marian usadas pelo aplicativo. `runtime.json` registra os hashes original e publicado; mudanças no bundle exigem revisão do alias e novos testes reais.
+
 ## Extensões
 
 Um idioma adicional precisa de dados locais com licença compatível, registro de linguagem, testes e adaptação do seletor. Um novo motor pode manter o contrato de ocorrências sem alterar a edição. Regras novas devem incluir exemplos positivos e falsos positivos antes de serem ativadas.

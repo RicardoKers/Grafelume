@@ -107,12 +107,23 @@ Os oito novos cenários de interface foram executados nos dois navegadores: nenh
 
 A conferência visual incluiu prévias com três correções em desktop e 320 px. Em telas estreitas, os cartões selecionáveis preservam sua altura e a lista rola sem sobreposição; dentro da prévia, título e botões permanecem visíveis enquanto a lista de alterações rola. A navegação mantém o comportamento do diálogo nativo: o conteúdo da aplicação fica inerte, e o navegador pode permitir foco em seus próprios controles.
 
+## Tradução local — versão 1.2.0
+
+Validação em 7 de novembro de 2026, Windows/Node 24.19.0: tipos, build, integridade dos modelos e caminhos aprovados; **65 testes unitários** e cobertura de **63 cenários de navegador aprovados**, com os três casos específicos de clipboard/IME não aplicáveis ao Firefox já descritos. As regressões do editor foram executadas em Chromium e Firefox; três verificações afetadas pela concorrência das ferramentas foram repetidas isoladamente e passaram.
+
+O novo cenário com modelos reais passou nos dois navegadores: cancelamento de download, falha 503 com tentativa posterior, PT→EN e EN→PT-BR, preservação de duas frases no mesmo parágrafo e de quebras de linha, aplicação explícita com desfazer/refazer isolado, substituição de seleção e novos Workers após recarregamento inteiramente offline. A auditoria das requisições confirmou somente GET/HEAD da mesma origem, sem corpo ou texto do documento; as chaves do cache contêm somente caminhos estáticos. A preparação inicial transfere cerca de 135 MB e a segunda direção cerca de 120 MB adicionais.
+
+A conferência visual da tradução foi feita no Chromium em 320×740 nos temas claro e escuro: rótulos, fonte, campos somente leitura, botões visíveis, foco inicial, fechamento por Escape, restauração do foco e ausência de rolagem horizontal. Abrir o diálogo ou mudar o idioma não baixou arquivos de tradução. Safari, Edge e aparelhos móveis físicos não foram verificados para esse recurso.
+
+`node scripts/smoke-translation.mjs` também testa diretamente o runtime real, com CSP restrita, uma thread WASM e sem isolamento de origem. O script diferencia inferência sem rede em memória da persistência após recarregar, que é coberta pelo E2E. Ao atualizar os modelos ou Transformers/ONNX, repita ambos e preserve os hashes, avisos e a versão do cache.
+
 ## Limites conhecidos
 
 - O Hunspell real roda via WebAssembly. Sugestões e cobertura dependem dos dados escolhidos e podem diferir de uma instalação específica do LibreOffice. O dicionário PT-BR distribuído identifica-se como VERO 3.2 (2013); não se presume atualização linguística até 2026. Consulte `DICTIONARIES.md`.
 - A correção trabalha com um idioma selecionado de cada vez. Misturar português e inglês pode produzir ocorrências esperadas; alternância automática não está habilitada.
 - Os filtros técnicos reduzem falsos positivos, mas podem ocultar erros em trechos reconhecidos como códigos. Podem ser desativados.
 - As regras de revisão são conservadoras; não avaliam concordância ou contexto semântico.
+- A tradução neural local pode conter erros, omissões ou escolhas inadequadas. Deve ser revisada; não há avaliação automática de qualidade, glossário especializado ou preservação garantida de nomes/códigos. Frases longas são divididas por contagem de tokens; atingir o limite de saída gera erro em vez de aplicar uma tradução parcial. Velocidade e memória dependem do dispositivo.
 - A área de transferência depende de permissões e de contexto seguro. Atalhos nativos são uma alternativa quando o acesso programático é bloqueado.
 - Não há salvamento de documentos. Recarregar ou encerrar uma janela descarta o texto em memória; exporte antes.
 - O cache pode ser removido por políticas do navegador. O modo offline precisa de um download anterior concluído.

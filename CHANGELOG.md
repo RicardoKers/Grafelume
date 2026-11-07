@@ -1,5 +1,11 @@
 # Histórico de versões
 
+## 1.2.0 — 7 de novembro de 2026
+
+- Tradução local PT ↔ EN em Worker, com download explícito e verificado dos modelos, progresso, cancelamento e remoção dos modelos.
+- Prévia do documento ou seleção, com cópia, exportação TXT e aplicação explícita desfeita em um passo.
+- Modelos e runtime servidos pela aplicação e armazenados para reabertura offline; nenhum texto enviado a serviços externos.
+
 ## 1.1.0 — 7 de novembro de 2026
 
 - Correções em lote no painel de revisão, com escolha explícita de uma sugestão por ocorrência.

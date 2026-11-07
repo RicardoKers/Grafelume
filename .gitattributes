@@ -10,3 +10,5 @@ public/dictionaries/*.aff -text
 public/dictionaries/*.dic -text
 *.png binary
 *.wasm binary
+# Vendor assets retain exact bytes; source manifests provide readable hashes.
+public/translation/** binary

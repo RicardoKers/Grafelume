@@ -36,13 +36,16 @@ for (const [relative, information] of Object.entries(lock.packages).sort(
       entry.isFile() &&
       /^(licen[cs]e|copying|copyright|notice)(\.|$|-)/i.test(entry.name),
   );
-  if (!licenses.length)
+  const vendorNotice = ['guid-typescript', 'onnxruntime-common', 'onnxruntime-node', 'onnxruntime-web'].includes(name)
+    ? path.join(root, 'public', 'translation', 'engine', 'notices', name + '.txt') : undefined;
+  if (!licenses.length && !vendorNotice)
     throw new Error(
       `Aviso integral ausente: ${name}. Verifique a licença antes de publicar.`,
     );
   chunks.push(
     `\n${"=".repeat(72)}\n${metadata.name} ${metadata.version}\nDeclared license: ${metadata.license ?? information.license}\n`,
   );
+  if (!licenses.length && vendorNotice) chunks.push(await readFile(vendorNotice, 'utf8'));
   for (const license of licenses) {
     chunks.push(
       `\n--- ${license.name} ---\n${await readFile(path.join(folder, license.name), "utf8")}\n`,

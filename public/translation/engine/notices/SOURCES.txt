@@ -1,0 +1,32 @@
+Grafelume local translation engine notices
+Fetched from official upstream repositories; original license and third-party notice texts preserved in the package-specific files. npm archives omit these notices.
+ONNX Runtime Node tag v1.30.0 resolves to f2c39fe2f838cf35ce7da92824f5a5e3ee6e88a7.
+ONNX Runtime Web revision comes from node_modules/onnxruntime-web/__commit.txt. Browser common version suffix resolves to 2a43ec07e67df9263c7c56c15da76cc7f74d7b32.
+
+node LICENSE
+Source: https://raw.githubusercontent.com/microsoft/onnxruntime/f2c39fe2f838cf35ce7da92824f5a5e3ee6e88a7/LICENSE
+SHA-256: 2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c
+
+node ThirdPartyNotices.txt
+Source: https://raw.githubusercontent.com/microsoft/onnxruntime/f2c39fe2f838cf35ce7da92824f5a5e3ee6e88a7/ThirdPartyNotices.txt
+SHA-256: 143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3
+
+web LICENSE
+Source: https://raw.githubusercontent.com/microsoft/onnxruntime/8d85527a010e294a26b274749f74294b2a32cec5/LICENSE
+SHA-256: 2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c
+
+web ThirdPartyNotices.txt
+Source: https://raw.githubusercontent.com/microsoft/onnxruntime/8d85527a010e294a26b274749f74294b2a32cec5/ThirdPartyNotices.txt
+SHA-256: 143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3
+
+common-web LICENSE
+Source: https://raw.githubusercontent.com/microsoft/onnxruntime/2a43ec07e67df9263c7c56c15da76cc7f74d7b32/LICENSE
+SHA-256: 2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c
+
+common-web ThirdPartyNotices.txt
+Source: https://raw.githubusercontent.com/microsoft/onnxruntime/2a43ec07e67df9263c7c56c15da76cc7f74d7b32/ThirdPartyNotices.txt
+SHA-256: 143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3
+
+guid-typescript: ISC attribution reconstructed transparently from installed npm package metadata and the SPDX ISC standard text; see guid-typescript.txt.
+
+Grafelume distribution change: copy-translation-runtime.mjs consistently aliases one unused model class export/registry identifier to avoid a verified GitHub secret-scanner false positive. The original package checksum and distributed checksum are recorded in src/translation/runtime.json. Marian inference classes and model weights are unchanged.

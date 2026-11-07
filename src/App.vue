@@ -6,6 +6,7 @@ import {
   watch,
   onMounted,
   onBeforeUnmount,
+  nextTick,
 } from "vue";
 import {
   ShieldCheck,
@@ -15,6 +16,7 @@ import {
   RefreshCw,
   X,
   Check,
+  Languages,
 } from "@lucide/vue";
 import AppHeader from "./components/AppHeader.vue";
 import StatusBar from "./components/StatusBar.vue";
@@ -24,6 +26,8 @@ import ReviewPanel from "./components/ReviewPanel.vue";
 import CorrectionMenu from "./components/CorrectionMenu.vue";
 import SettingsDialog from "./components/SettingsDialog.vue";
 import BatchPreviewDialog from "./components/BatchPreviewDialog.vue";
+import TranslationDialog from './components/TranslationDialog.vue';
+import type { TranslationSelection } from './translation/replacement';
 import { useBatchCorrections } from "./composables/useBatchCorrections";
 import { isBatchProtected } from "./review/BatchCorrections";
 import {
@@ -36,7 +40,7 @@ import { copyText, readText } from "./services/ClipboardService";
 import { downloadText, readTextFile } from "./services/FileService";
 import { useProofreader } from "./composables/useProofreader";
 import { registerPwa, prepareOffline, dictionaryOffline } from "./pwa";
-import type { Issue } from "./types";
+import type { Issue, Language } from "./types";
 
 const settings = reactive(loadSettings()),
   text = ref("");
@@ -74,6 +78,35 @@ const {
 const batchBlocked = computed(
   () => !!active.value && isBatchProtected(text.value, active.value),
 );
+const translation = ref<(TranslationSelection & { sourceText: string; sourceLanguage: Language; selected: boolean })>();
+function openTranslation() {
+  if (!text.value.trim()) return;
+  const selection = editor.value?.selection();
+  const selected = !!selection?.text;
+  translation.value = {
+    snapshot: text.value,
+    from: selected ? selection!.from : 0,
+    to: selected ? selection!.to : text.value.length,
+    sourceText: selected ? selection!.text : text.value,
+    sourceLanguage: settings.language,
+    selected,
+  };
+}
+async function closeTranslation() {
+  translation.value = undefined;
+  await nextTick();
+  editor.value?.focus();
+}
+async function applyTranslation(value: string, target: Language) {
+  const source = translation.value;
+  if (!source || !editor.value?.applyTranslation(source, value)) {
+    notify('O texto original mudou. Reabra a tradução para usar a versão atual.');
+    return;
+  }
+  if (!source.selected) settings.language = target;
+  await closeTranslation();
+  notify('Tradução aplicada. Use Desfazer para recuperar o original.');
+}
 const menu = ref<{
   x: number;
   y: number;
@@ -472,7 +505,7 @@ const example =
           <div class="document-area">
             <div class="document-heading">
               <span><span class="document-dot" />Texto sem título</span
-              ><span>TEXTO SIMPLES</span>
+              ><button class="translation-open" :disabled="!text.trim()" title="Traduzir o texto ou a seleção" @click="openTranslation"><Languages :size="14" />Traduzir</button>
             </div>
             <TextEditor
               ref="editor"
@@ -576,6 +609,15 @@ const example =
       :plan="batchPlan"
       @close="closeBatchPreview"
       @apply="applyBatch"
+    />
+    <TranslationDialog
+      v-if="translation"
+      :source-text="translation.sourceText"
+      :source-language="translation.sourceLanguage"
+      :selected="translation.selected"
+      :stale="text !== translation.snapshot"
+      @close="closeTranslation"
+      @apply="applyTranslation"
     />
     <CorrectionMenu
       v-if="menu"

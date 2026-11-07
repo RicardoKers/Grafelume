@@ -44,9 +44,15 @@ export default defineConfig(({ command, isPreview }) => ({
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,woff2,wasm}"],
+        globIgnores: ['translation/**'],
         cleanupOutdatedCaches: true,
         navigateFallback: "index.html",
         runtimeCaching: [
+          {
+            urlPattern: ({ url, sameOrigin, request }) => sameOrigin && url.pathname.includes('/translation/') && request.cache !== 'no-store',
+            handler: 'CacheOnly',
+            options: { cacheName: 'grafelume-translation-v1' },
+          },
           {
             urlPattern: /\/dictionaries\/.*\.(aff|dic)$/,
             handler: "CacheFirst",

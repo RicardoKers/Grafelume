@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL("../dist/", import.meta.url));
 const base = "/Grafelume/";
@@ -111,7 +112,20 @@ const notices = await readFile(
 );
 assert.ok(notices.includes("hunspell-wasm"), "Avisos Hunspell ausentes");
 assert.ok(notices.includes("@lucide/vue"), "Avisos Lucide ausentes");
+assert.ok(notices.includes('@huggingface/transformers'), 'Avisos de tradução ausentes');
+const models = JSON.parse(await readFile(new URL('../src/translation/models.json', import.meta.url), 'utf8'));
+const runtime = JSON.parse(await readFile(new URL('../src/translation/runtime.json', import.meta.url), 'utf8'));
+for (const asset of [
+  ...runtime.files.map(file => ({ ...file, path: `translation/engine/${file.path}` })),
+  ...models.flatMap(model => [...model.files, ...model.notices].map(file => ({ ...file, path: `translation/models/${model.id}/${file.path}` }))),
+]) {
+  const binary = await readFile(path.join(root, asset.path));
+  assert.equal(binary.length, asset.bytes, `Tamanho divergente: ${asset.path}`);
+  assert.equal(createHash('sha256').update(binary).digest('hex'), asset.sha256, `Hash divergente: ${asset.path}`);
+  assert.ok(!worker.includes(asset.path), `Modelo/runtime entrou no precache automático: ${asset.path}`);
+}
+assert.ok(worker.includes('grafelume-translation-v1') && worker.includes('CacheOnly'), 'Cache explícito de tradução ausente');
 
 console.log(
-  `Build verificado: base ${base}, manifesto, ícones, ${wasmFiles.length} WASM em precache, dois dicionários e avisos.`,
+  `Build verificado: base ${base}, manifesto, ícones, WASM Hunspell em precache, dois dicionários, tradução íntegra sob demanda e avisos.`,
 );
