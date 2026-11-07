@@ -18,6 +18,10 @@ for (const [relative, information] of Object.entries(lock.packages).sort(
 )) {
   if (!relative) continue;
   const name = relative.split("node_modules/").at(-1);
+  // Transformers' optional Node image backend installs platform libvips
+  // binaries. The browser-only translation runtime never copies or loads them;
+  // they are not part of the deployed artifact (and Linux archives omit LICENSE).
+  if (name.startsWith('@img/sharp-libvips-')) continue;
   // Workbox is a build dependency that also contributes the deployed SW runtime.
   if (information.dev && !name.startsWith("workbox-")) continue;
   const folder = path.join(root, relative);
