@@ -1,0 +1,6 @@
+hunspell-wasm 0.3.0 — código redistribuído sem modificações.
+Fontes do wrapper e do port: https://github.com/rotemdan/hunspell-wasm/tree/8f755ef64e8b047b77b676f9698b3dfa5cb1887d
+Pacote exato com fontes do wrapper: https://registry.npmjs.org/hunspell-wasm/-/hunspell-wasm-0.3.0.tgz
+Fontes C++ Hunspell: https://github.com/rotemdan/hunspell-wasm/tree/8f755ef64e8b047b77b676f9698b3dfa5cb1887d/lib/hunspell
+Instruções de build: https://github.com/rotemdan/hunspell-wasm/blob/8f755ef64e8b047b77b676f9698b3dfa5cb1887d/docs/Building.md
+Licença no metadado npm: LGPL-2.0 OR GPL-2.0 OR MPL-1.1. O aviso COPYING.LESSER fornecido é LGPL 2.1; consulte os textos originais nesta pasta.

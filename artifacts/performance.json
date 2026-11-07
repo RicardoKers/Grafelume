@@ -1,0 +1,50 @@
+{
+  "measuredAt": "2026-11-06T21:53:23.566Z",
+  "browser": "Chromium 158.0.8127.18",
+  "environment": {
+    "platform": "win32",
+    "node": "v24.19.0",
+    "viewport": "1440x960",
+    "headless": true
+  },
+  "document": {
+    "words": 10000,
+    "unknownOccurrences": 2000,
+    "distinctUnknownWords": 1001,
+    "paragraphs": 1000
+  },
+  "timingsMs": {
+    "navigationToCheckerReady": 1310,
+    "warmDictionaryTxtImportToReady": 352.1,
+    "warmDictionaryPlainTextPasteToReady": 298.2,
+    "incrementalParagraphEditToReady": 314.7,
+    "typingWholeSequence": 1020.6,
+    "typingThenSettled": 1315.5
+  },
+  "limits": [
+    "Uma execução em Chromium headless neste computador; não é garantia de latência em outros dispositivos.",
+    "Tempos de interface incluem debounce de 260 ms, contagem, revisão básica, transporte ao Worker, renderização e chamadas de automação.",
+    "A carga inicial usa contexto novo, mas o servidor e o cache de disco do sistema operacional podem estar aquecidos.",
+    "Digitação usa eventos reais de teclado via Playwright e mede evento até o próximo frame; long tasks abrangem somente a thread principal.",
+    "Carga usa o controle real Importar TXT; colagem dispara ClipboardEvent de texto simples no editor, sem tocar a área de transferência do sistema.",
+    "Nenhum texto de teste é persistido neste resultado."
+  ],
+  "typing": {
+    "characters": 29,
+    "requestedDelayMs": 25,
+    "sampledKeys": 29,
+    "eventToFrameMedianMs": 12.2,
+    "eventToFrameP95Ms": 14.5,
+    "eventToFrameMaxMs": 14.5
+  },
+  "mainThreadLongTasks": {
+    "count": 0,
+    "totalMs": 0,
+    "maximumMs": 0
+  },
+  "observed": {
+    "issueCount": 2000,
+    "wordCount": "10.006 palavras",
+    "status": "Corretor ativo"
+  }
+}

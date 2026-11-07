@@ -1,0 +1,46 @@
+{
+  "name": "grafelume",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "predev": "node scripts/copy-dictionaries.mjs",
+    "dictionaries": "node scripts/copy-dictionaries.mjs",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "prebuild": "node scripts/copy-dictionaries.mjs && node scripts/copy-licenses.mjs",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.10.0",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.0",
+    "@lucide/vue": "^1.70.0",
+    "hunspell-wasm": "^0.3.0",
+    "vue": "^3.5.22"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.0.0",
+    "@vitejs/plugin-vue": "^6.0.10",
+    "dictionary-en": "^4.0.0",
+    "dictionary-pt": "^4.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.6",
+    "vite-plugin-pwa": "^2.0.0",
+    "vitest": "^5.1.0",
+    "vue-tsc": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "overrides": {
+    "glob": "^14.0.4",
+    "minimatch": "^11.0.5"
+  }
+}
