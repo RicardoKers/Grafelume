@@ -2,6 +2,8 @@
 
 **Escreva com clareza.** Editor de texto simples com correção ortográfica local em português brasileiro e inglês americano.
 
+[Abrir o Grafelume](https://ricardokers.github.io/Grafelume/) · [Histórico de versões](CHANGELOG.md)
+
 O Grafelume funciona inteiramente no navegador: sem contas, backend, inteligência artificial, rastreadores ou envio dos textos para servidores. O código da aplicação usa licença MIT; os dicionários e as dependências preservam suas próprias licenças.
 
 ## Executar localmente
@@ -29,7 +31,7 @@ O build está em **`dist/`**. Para verificar instalação e modo offline, utiliz
 ## Usar o editor
 
 - Escreva ou cole texto simples e selecione Português (Brasil) ou English (US).
-- Erros ortográficos recebem sublinhado vermelho. O botão direito apresenta sugestões; a revisão lateral também permite navegar e corrigir ocorrências.
+- Erros ortográficos recebem sublinhado vermelho. O botão direito ou Shift+F10 abre as sugestões, preservando a seleção; a revisão lateral também permite navegar e corrigir ocorrências.
 - A revisão básica, opcional, identifica problemas determinísticos de espaços, repetição e pontuação com sublinhado azul. Não realiza análise gramatical de concordância.
 - Adicione termos ao dicionário pessoal ou ignore-os durante a sessão. Cada idioma possui seu próprio dicionário pessoal.
 - Copie, importe ou exporte TXT em UTF-8. Alterações e correções individuais podem ser desfeitas pelo histórico do editor.
@@ -47,22 +49,14 @@ Quando houver uma nova versão, a atualização é oferecida mediante ação exp
 
 ## Publicar no GitHub Pages
 
-O projeto está preparado para **`RicardoKers/Grafelume`**, com endereço esperado [ricardokers.github.io/Grafelume](https://ricardokers.github.io/Grafelume/). A existência ou publicação desse repositório não é presumida.
+O projeto está publicado em [ricardokers.github.io/Grafelume](https://ricardokers.github.io/Grafelume/), com código em [RicardoKers/Grafelume](https://github.com/RicardoKers/Grafelume). Envios para `main` iniciam o workflow **Verificar e publicar no GitHub Pages**. A publicação só é atualizada depois que as verificações passam.
 
-1. Crie um repositório público vazio chamado `Grafelume` na conta `RicardoKers`.
-2. Versione os arquivos locais, incluindo `package-lock.json`, e envie a branch `main` ao repositório.
+Para hospedar uma cópia em outra conta:
+
+1. Crie um repositório público e envie o projeto, incluindo `package-lock.json` e `.github/workflows/deploy.yml`, à branch `main`.
+2. Se o repositório tiver outro nome, ajuste `base` em `vite.config.ts` e as URLs dos testes.
 3. Em **Settings → Pages → Build and deployment → Source**, selecione **GitHub Actions**.
-4. Habilite Actions se necessário e acompanhe o workflow **Verificar e publicar no GitHub Pages**.
-
-Exemplo para um diretório ainda sem Git:
-
-```sh
-git init -b main
-git add .
-git commit -m "feat: primeira versão do Grafelume"
-git remote add origin https://github.com/RicardoKers/Grafelume.git
-git push -u origin main
-```
+4. Habilite Actions se necessário e acompanhe o workflow até a conclusão do job `deploy`.
 
 O workflow instala o lockfile, verifica tipos, executa testes unitários, gera o build e executa testes reais em Chromium antes de publicar `dist/`. Pull requests executam as verificações sem publicar. Somente o job de publicação recebe permissões de Pages e identidade OIDC. Consulte a [documentação oficial de configuração do GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 

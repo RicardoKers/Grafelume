@@ -23,6 +23,23 @@ const emit = defineEmits<{
   add: [word: string];
   close: [];
 }>();
+
+function suggestionLabel(suggestion: string): string {
+  if (!suggestion) return "Remover espaço";
+  if (suggestion === " ") return "Substituir por um espaço";
+  if (/^\s+$/.test(suggestion)) {
+    const lineBreaks = suggestion.match(/\n/g)?.length ?? 0;
+    if (lineBreaks) {
+      return `Substituir por ${lineBreaks === 1 ? "uma quebra de linha" : `${lineBreaks} quebras de linha`}`;
+    }
+    return `Substituir por ${suggestion.length} espaços`;
+  }
+  return `Substituir por ${suggestion}`;
+}
+
+function suggestionText(suggestion: string): string {
+  return suggestion.trim() ? suggestion : suggestionLabel(suggestion);
+}
 </script>
 <template>
   <aside class="review-panel" aria-label="Painel de revisão">
@@ -88,12 +105,10 @@ const emit = defineEmits<{
               v-for="suggestion in suggestions"
               :key="suggestion"
               class="suggestion-chip"
-              :aria-label="`Substituir por ${suggestion}`"
+              :aria-label="suggestionLabel(suggestion)"
               @click="emit('replace', issue, suggestion)"
             >
-              <Check :size="13" />{{
-                suggestion.trim() || "Remover espaço"
-              }}</button
+              <Check :size="13" />{{ suggestionText(suggestion) }}</button
             ><span v-if="!loading && !suggestions.length" class="muted"
               >Sem sugestão. Você pode editar no texto.</span
             >

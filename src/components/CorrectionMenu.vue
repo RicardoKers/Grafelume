@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ref, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
 const props = defineProps<{
   x: number;
   y: number;
   incorrect: boolean;
+  hasSelection: boolean;
   suggestions: string[];
   loading: boolean;
 }>();
@@ -14,12 +15,28 @@ const emit = defineEmits<{
 }>();
 const menu = ref<HTMLDivElement>();
 const position = ref({ left: `${props.x}px`, top: `${props.y}px` });
+let observer: ResizeObserver | undefined;
+let disposed = false;
+function updatePosition() {
+  if (!menu.value) return;
+  const box = menu.value.getBoundingClientRect();
+  position.value = {
+    left: `${Math.max(8, Math.min(props.x, innerWidth - box.width - 8))}px`,
+    top: `${Math.max(8, Math.min(props.y, innerHeight - box.height - 8))}px`,
+  };
+}
 function outside(event: PointerEvent) {
   if (!menu.value?.contains(event.target as Node)) emit("close");
 }
 function keyboard(event: KeyboardEvent) {
-  if (event.key === "Escape" || event.key === "Tab") {
+  if (event.key === "Escape") {
     event.preventDefault();
+    emit("close");
+    return;
+  }
+  if (event.key === "Tab") {
+    // The owner restores editor focus. Keep the native Tab action so keyboard
+    // navigation can proceed forward/backward instead of trapping focus there.
     emit("close");
     return;
   }
@@ -40,15 +57,29 @@ function keyboard(event: KeyboardEvent) {
 }
 onMounted(async () => {
   await nextTick();
-  const box = menu.value!.getBoundingClientRect();
-  position.value = {
-    left: `${Math.max(8, Math.min(props.x, innerWidth - box.width - 8))}px`,
-    top: `${Math.max(8, Math.min(props.y, innerHeight - box.height - 8))}px`,
-  };
-  menu.value?.querySelector("button")?.focus();
+  if (disposed || !menu.value) return;
+  updatePosition();
+  menu.value.querySelector<HTMLButtonElement>("button:not(:disabled)")?.focus();
+  // Suggestions arrive after opening. Reposition as its measured size changes,
+  // without moving keyboard focus away from the command the user is choosing.
+  if (typeof ResizeObserver !== "undefined") {
+    observer = new ResizeObserver(updatePosition);
+    observer.observe(menu.value);
+  }
+  window.addEventListener("resize", updatePosition);
   document.addEventListener("pointerdown", outside);
 });
-onBeforeUnmount(() => document.removeEventListener("pointerdown", outside));
+watch(
+  () => [props.x, props.y, props.suggestions, props.loading, props.incorrect],
+  updatePosition,
+  { flush: "post", deep: true },
+);
+onBeforeUnmount(() => {
+  disposed = true;
+  observer?.disconnect();
+  window.removeEventListener("resize", updatePosition);
+  document.removeEventListener("pointerdown", outside);
+});
 </script>
 <template>
   <div
@@ -83,10 +114,10 @@ onBeforeUnmount(() => document.removeEventListener("pointerdown", outside));
       </button>
       <hr />
     </template>
-    <button role="menuitem" @click="emit('action', 'cut')">
+    <button role="menuitem" :disabled="!hasSelection" @click="emit('action', 'cut')">
       Recortar <kbd>Ctrl+X</kbd>
     </button>
-    <button role="menuitem" @click="emit('action', 'copy')">
+    <button role="menuitem" :disabled="!hasSelection" @click="emit('action', 'copy')">
       Copiar <kbd>Ctrl+C</kbd>
     </button>
     <button role="menuitem" @click="emit('action', 'paste')">

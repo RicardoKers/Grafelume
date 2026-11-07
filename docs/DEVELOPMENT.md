@@ -46,7 +46,7 @@ Resultados executados em 6 de novembro de 2026, Windows, Node 24.19.0:
 
 Os dois testes não aplicáveis no Firefox usam permissões programáticas de clipboard do Playwright e composição IME via CDP, APIs específicas do Chromium. Digitação, seleção, correções, histórico, menu pelo teclado, TXT UTF-8, preferências, dicionário pessoal, falha 503 com recuperação e recarregamento totalmente offline em ambos os idiomas foram verificados nos dois navegadores. Clipboard e composição acentuada via CDP passaram no Chromium. A suíte também verifica que as requisições são locais, não contêm o documento e que o documento não é persistido.
 
-Não foram testados Edge, Linux, Safari, dispositivos móveis físicos ou teclados IME do sistema operacional. O layout móvel foi verificado em viewport de 390 × 844 no Chromium e no Firefox. A instalação pelo menu do sistema do navegador não foi automatizada; manifesto e funcionamento offline foram verificados.
+Na validação inicial local não foram testados Edge, Linux, Safari, dispositivos móveis físicos ou teclados IME do sistema operacional. A publicação posteriormente também passou pelos testes unitários e de interface Chromium no runner Ubuntu do GitHub Actions. O layout móvel inicial foi verificado em viewport de 390 × 844 no Chromium e no Firefox. A instalação pelo menu do sistema do navegador não foi automatizada; manifesto e funcionamento offline foram verificados.
 
 Com 10.000 palavras, 2.000 ocorrências desconhecidas e 1.001 formas desconhecidas distintas, o motor isolado levou **28,10 ms** na primeira análise e **3,95 ms** após uma edição incremental, com os dicionários já carregados.
 
@@ -68,6 +68,25 @@ Para repetir o benchmark, mantenha `npm run preview` aberto após o build e exec
 O build emite avisos de externalização de `fs/promises` e `module` nas ramificações Node do pacote Hunspell. Essas ramificações não são chamadas no Worker do navegador; os testes reais online e offline passaram com o WASM local.
 
 A auditoria completa reporta quatro entradas de gravidade baixa na cadeia de build `deepmerge → @rollup/plugin-node-resolve → workbox-build → vite-plugin-pwa`, todas relacionadas ao mesmo aviso de prototype poisoning de `deepmerge` 4.3.1. Não havia versão corrigida de `deepmerge` publicada durante a verificação. A configuração de build é local e controlada pelo projeto; esse pacote não integra o bundle de produção. Os alertas críticos/moderados encontrados inicialmente foram resolvidos com atualização de Vitest e overrides de `glob`/`minimatch`. Reavalie a auditoria ao atualizar as dependências.
+
+## Regressões da versão 1.0.1
+
+Validação concluída em 7 de novembro de 2026, Windows, Node 24.19.0:
+
+| Verificação | Resultado |
+| --- | --- |
+| TypeScript e build de produção | Aprovados |
+| Vitest | 31 testes aprovados |
+| Playwright Chromium 158 | 24 testes aprovados |
+| Playwright Firefox 159 | 21 testes aprovados; 3 não aplicáveis |
+| Suíte de interface completa | 45 aprovados, 3 não aplicáveis, nenhuma falha; 58,9 s |
+| Recursos e caminhos do build | Aprovados |
+
+As novas regressões verificam seleção integral ao abrir o menu pelo teclado, copiar/recortar com desfazer, comandos desativados sem seleção, saída do menu por Tab, sugestões que chegam depois da abertura e reposicionamento após resize. Também cobrem a remoção do erro ao desligar a ortografia, a recuperação de um Worker cujo carregamento falhou, os rótulos de espaços/quebras de linha e a aplicação das substituições. O terceiro caso não aplicável no Firefox é o novo teste de clipboard, pela mesma limitação de permissões dos testes anteriores.
+
+Os testes de legibilidade calculam contraste a partir das cores computadas no DOM nos dois temas, verificam o tamanho das informações e ações revisadas e conferem ausência de rolagem horizontal em 390 e 320 px. O botão que alterna o painel deve ficar inteiramente visível em ambas as larguras. Capturas locais dos temas claro/escuro e da tela de 320 px foram inspecionadas.
+
+O corretor é criado sob demanda. Quando uma instância falha ou excede o tempo de espera, os pedidos pendentes são rejeitados e a próxima tentativa pode criar outra instância. Mensagens antigas são descartadas por identidade da instância e geração da revisão; o conteúdo do editor não é substituído durante essa recuperação.
 
 ## Limites conhecidos
 

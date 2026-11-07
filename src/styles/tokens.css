@@ -5,8 +5,8 @@
   --panel: #fbfcfd;
   --toolbar: #fdfdfe;
   --text: #283246;
-  --muted: #7c8494;
-  --faint: #a1a8b5;
+  --muted: #525e73;
+  --faint: #626f82;
   --border: #e8ebf0;
   --hover: #f0f2f6;
   --blue: #315be8;
@@ -15,7 +15,7 @@
   --green: #41967d;
   --green-soft: #f0f8f4;
   --green-border: #dfede6;
-  --red: #cf5b63;
+  --red: #bd424d;
   --error-soft: #fff6f6;
   --error-border: #f1d7d9;
   --selection: #dce5ff;
@@ -28,7 +28,7 @@
   --toolbar: #20252e;
   --text: #e4e8f1;
   --muted: #a0a9b9;
-  --faint: #6d788b;
+  --faint: #96a1b2;
   --border: #303743;
   --hover: #2a313d;
   --blue: #91acff;

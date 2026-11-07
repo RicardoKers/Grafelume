@@ -128,12 +128,16 @@ onMounted(() => {
             )
               return false;
             event.preventDefault();
-            const pos = editor.state.selection.main.head;
-            const word = editor.state.wordAt(pos),
-              from = word?.from ?? pos,
-              to = word?.to ?? pos;
+            const selected = editor.state.selection.main;
+            const pos = selected.head;
+            const range = selected.empty ? editor.state.wordAt(pos) : selected;
+            const from = range?.from ?? pos,
+              to = range?.to ?? pos;
             const coords = editor.coordsAtPos(pos);
-            editor.dispatch({ selection: { anchor: from, head: to } });
+            // A keyboard context menu must keep the user's selection, including
+            // its direction, for copy/cut/paste rather than select one word.
+            if (selected.empty)
+              editor.dispatch({ selection: { anchor: from, head: to } });
             emit("context", {
               x: coords?.left ?? 100,
               y: coords?.bottom ?? 150,

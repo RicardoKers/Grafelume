@@ -64,7 +64,8 @@ const menu = ref<{
 const updateAvailable = ref<() => Promise<void>>(),
   installPrompt = ref<any>();
 let toastTimer: ReturnType<typeof setTimeout>,
-  suggestionVersion = 0;
+  suggestionVersion = 0,
+  menuVersion = 0;
 const systemTheme = window.matchMedia("(prefers-color-scheme: dark)"),
   systemDark = ref(systemTheme.matches);
 const dark = computed(
@@ -107,6 +108,9 @@ watch(
     personal.value = loadPersonal(settings.language);
     ignored.value = [];
     active.value = undefined;
+    menu.value = undefined;
+    suggestionsLoading.value = false;
+    suggestionVersion++;
     void refreshOffline();
   },
 );
@@ -153,7 +157,9 @@ onBeforeUnmount(() => {
   window.removeEventListener("beforeinstallprompt", beforeInstall);
 });
 async function refreshOffline() {
-  offlineReady.value = await dictionaryOffline(settings.language);
+  const language = settings.language;
+  const available = await dictionaryOffline(language);
+  if (language === settings.language) offlineReady.value = available;
 }
 function confirmReplace() {
   return (
@@ -301,6 +307,7 @@ async function openContext(data: {
   to: number;
   text: string;
 }) {
+  const version = ++menuVersion;
   const issue = issues.value.find(
     (i) => i.from <= data.from && i.to >= data.to && data.to > data.from,
   );
@@ -318,15 +325,12 @@ async function openContext(data: {
   if (current.loading) {
     try {
       const items = await suggestions(target.text);
-      if (
-        menu.value?.from === current.from &&
-        menu.value?.text === current.text
-      )
+      if (version === menuVersion && menu.value)
         menu.value.suggestions = items;
     } catch (e) {
-      notify((e as Error).message);
+      if (version === menuVersion && menu.value) notify((e as Error).message);
     } finally {
-      if (menu.value?.from === current.from) menu.value.loading = false;
+      if (version === menuVersion && menu.value) menu.value.loading = false;
     }
   }
 }
@@ -513,6 +517,7 @@ const example =
       :x="menu.x"
       :y="menu.y"
       :incorrect="!!menu.issue"
+      :has-selection="!!menu.text"
       :suggestions="menu.suggestions"
       :loading="menu.loading"
       @close="closeMenu"
